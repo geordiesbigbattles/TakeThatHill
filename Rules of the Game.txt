@@ -1,0 +1,37 @@
+Introduction. This is a short wargame designed to explore the relationship between fire and movement and between concentration and dispersion in infantry
+tactics. A minimum of two players (Blue and Red) are required to play.
+
+The Blue Player commands an Infantry Platoon made up of three sections, each represented by a double sided counter (left). 
+The Platoon Commander is representedby a smaller single sided counter and must move with one of the sections at all times.
+They may move between sections that are adjacent to each other provided they have not already moved that turn. 
+
+The Red player commands the opposing force of an Enemy section represented by a double sided counter (bottom left). The
+Hex Grid Map is the Blue Platoon’s AOR with a blue dotted line as the LD and a Red dashed line as the LOE. The Platoon is currently in the wood (A,B,C) receiving
+QBOs. Blue may deploy their sections in any formation in these 3 hexes and there is no limit to the number of sections that may occupy any one hex. The ground in
+front of Blue’s position is open and offers no cover from view or fire. About 500m away is a small hill (B5) on which the enemy section has hastily dug in. Blue’s
+mission is to ADVANCE to CLEAR the enemy from the feature, IOT allow the Coy MFC to establish an anchor OP to assist the Coy’s future advance. To assault the
+position you will need to fire and manoeuvre at least one section into an FUP (A4,B4,C4) and assault the hill (by moving on to it) whilst keeping the enemy suppressed
+by fire from one or more sections. Red’s aim is to delay Blue for as long as possible and attrite them in the process.
+Game Rules. The game is played with four phases per turn; 3 Blue, 1 Red. After all phases have been played the turn ends.
+1. Movement. Each fresh section may ‘move’ to any adjacent hex and become spent. A fresh section that remains still in its current hex does not become spent. A
+spent section may not move. The Platoon Commander may move from a fresh section to any adjacent section even if this section is spent. (Example: 1Section moves
+from A into A1 becoming spent, 2 and 3 section with the Pl Comd remain in B and stay fresh)
+2. Firing. Each fresh section may fire to suppress the enemy if desired, doing so turns the section spent. A spent section may not fire. To fire roll a dice, if the number
+exceeds the range in hexes from the firers to the hill the enemy section becomes spent. If the roll is equal to or less than the range the fire does not suppress. Because
+the enemy is situated on a hill there are no line of fire restrictions on friendly sections firing ‘through’ one another. (Example: A section firing from B1 would require a 5
+or 6 to suppress the enemy section)
+3. Rally. Any sections that are in the same hex as the Pl Comd are rallied automatically and become fresh. Any other spent sections must roll a dice and will become
+fresh if the roll exceeds the distance in hexes to the Pl Comd’s hex, if the roll is equal to or lower the section remains spent. Spent sections adjacent to
+the enemy hex do not become fresh unless in the same hex as the Pl Comd. (Example: 2 Section is spent in A2 and the Pl Comd is with 1 and 3 Sections in C3, it must
+roll a 3 or higher to become fresh again)
+4. Enemy Action. If the enemy section is spent when this phase commences it automatically becomes fresh and then the phase ends. If it is already fresh it may fire
+on any of the hex containing a Blue section as the Red Player wishes. If there is another section in an adjacent hex to the ‘target hex’ this too may be fired upon in the
+‘beaten zone’. Any sections that are in the beaten zone are engaged. For each section that is engaged the Red player rolls a dice, aiming to roll equal to or more than
+the distance to the target hexes in question. Successful rolls result in ‘hit’s on the Blue sections turning them spent if not already so. Every ‘hit’ moves the Victory
+Counter along one on the Victory Tracker. The Pl Comd is able to be independently targeted and does not count as an additional hit if the section they are with is
+successfully engaged. The enemy section always finishes the turn fresh. (Example: 1 Section (spent) is in B3, 2 Section (fresh) and the Pl comd are in B2 and 3
+Section (spent) is in A1. Red chooses to fire on 1 Section first as it is the closest Section, as 2 Section is adjacent to this target hex it will also be engaged. 3 Section
+although adjacent to 2 Section is not engaged because the enemy have already fired on the maximum of two hexes. Red rolls a 3 and hits, though it is already spent the
+victory counter moves up 1. 2 Section are further away, Red rolls a 2 which is ineffective.)
+Victory Conditions. Each time a turn elapses or a section is hit move the victory counter up by one, if it reaches 16 Red wins the game. If Blue manage to conduct
+and assault by moving a section into the enemy hex and the victory score is 10 or less Blue win. If the score is between 11 and 15 the result is a draw.
