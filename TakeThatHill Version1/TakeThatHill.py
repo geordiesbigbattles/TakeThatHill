@@ -1,4 +1,4 @@
-# "Take That Hill" Computer Assisted Wargame
+# "Take That Hill" Computer Assisted Instruction - Wargame
 # Version 1.0
 #
 # Mark Flanagan 16/05/2020
@@ -29,7 +29,7 @@ red_hits = 0
 section1_status = "Active"
 section2_status = "Active"
 section3_status = "Active"
-german_status = "Active"
+Red_status = "Active"
 #
 # Repeat Game Block while the "The hill has not been taken!"
 #
@@ -39,20 +39,20 @@ german_status = "Active"
 # Row 2: B, B1, B2, B3, B4, B5 
 # Row 3: C, C1, C2, C3, C4
 #
-# Data Entry: Position of British Sections
+# Data Entry: Position of Blue Sections
 #
-print ("What are the British Starting Positions")
+print ("What are the Blue Starting Positions")
 section1_location = input("Where is Section 1?[A, B or C]").upper()
 section2_location = input("Where is Section 2?[A, B or C]").upper()
 section3_location = input("Where is Section 3?[A, B or C]").upper()
 leader_in_section = int(input("Which section is the leader with? [1, 2, or 3]"))
 print ()
-# Note: The German Section is always in B5
-german_location = "B5" 
+# Note: The Red Section is always in B5
+Red_location = "B5" 
 while True:
-    print ("British Phase: Turn", turns_played)
+    print ("Blue Phase: Turn", turns_played)
     #
-    # Show locations of British troops
+    # Show locations of Blue troops
     # Reset Leader Hex as the Leader could always jump between squads
     #
     leader_hex = None
@@ -67,7 +67,7 @@ while True:
         leader_hex = section1_location
         print ("Reporting program bug - Leader not Assigned to Section")
     #
-    # British Sections 1..3
+    # Blue Sections 1..3
     #
     # Section 1
     if leader_in_section == 1:
@@ -89,11 +89,11 @@ while True:
     # Game Block
     # Sequence of Play for Turn
     #
-    # British Phase
-    # British Orders: THey will either Move or Fire
+    # Blue Phase
+    # Blue Orders: THey will either Move or Fire
     # Move
     print ()
-    print ("British Move")
+    print ("Blue Move")
     #
     # Does the Leader Move?
     # Note: The Leader is always Active
@@ -132,42 +132,42 @@ while True:
             # Section used its action to move
             section3_location = ans3
             section3_status = "Spent"
-    print ("End of British Movement")
+    print ("End of Blue Movement")
     print ()
     #
-    # British Fire
+    # Blue Fire
     #
-    print ("British Fire")
+    print ("Blue Fire")
     if section1_status == "Active":
         fire1 = input ("Section 1 Fires at B5, does it hit?")
         section1_status = "Spent"
         if fire1.upper() == "Y":
-            # Section 1 fires and hits the Germans in B5
+            # Section 1 fires and hits the Reds in B5
             print ("Good shot- Section 1")
             red_hits += 1
-            german_status = "Spent"
+            Red_status = "Spent"
     if section2_status == "Active":
         fire2 = input ("Section 2 Fires at B5, does it hit?")
         section2_status = "Spent"
         if fire2.upper() == "Y":
-            # Section 2 fires and hits the Germans in B5
+            # Section 2 fires and hits the Reds in B5
             print ("Good shot - Section 2")
             red_hits += 1
-            german_status = "Spent"
+            Red_status = "Spent"
     if section3_status == "Active":
         fire3 = input ("Section 3 Fires at B5, does it hit?")
         section3_status = "Spent"
         if fire3.upper() == "Y":
-            # Section 2 fires and hits the Germans in B5
+            # Section 2 fires and hits the Reds in B5
             print ("Good Shot - Section 3")
             red_hits += 1
-            german_status = "Spent"
-    print ("End of British Fire")
+            Red_status = "Spent"
+    print ("End of Blue Fire")
     print ()
     #
-    # British Rally
+    # Blue Rally
     #
-    # The British Leader is in which Hex?
+    # The Blue Leader is in which Hex?
     leader_location = ""
     if leader_in_section == 1:
         leader_location = section1_location
@@ -178,7 +178,7 @@ while True:
     else:
         print ("Exception: Don't know where the leader is!")
     
-    print ("British Rally Attempt")
+    print ("Blue Rally Attempt")
     if section1_status == "Spent":
         if section1_location == leader_location:
                 print ("Leader in same Hex - Section 1 Auto Rally")
@@ -211,29 +211,29 @@ while True:
                 section3_status = "Active"
     print ()
     #
-    # German Phase
-    print ("German Phase: Turn", turns_played)
+    # Red Phase
+    print ("Red Phase: Turn", turns_played)
     # Fire
-    if german_status == "Spent":
-        print ("Good Shooting! Effective suppressing fire is making the Germans hunkering down")
+    if Red_status == "Spent":
+        print ("Good Shooting! Effective suppressing fire is making the Reds hunkering down")
     elif (section1_location == "B5") or (section2_location == "B5") or (section3_location == "B5"):
-        print ("The Germans cannot fire as their position is being overrun")
+        print ("The Reds cannot fire as their position is being overrun")
     else:
-        german_status = "Spent"
+        Red_status = "Spent"
         brit_targets = []
         enemy = input ("Who did you shoot at [1, 2, 3, C]?")
         for infantry in enemy:
             if infantry != " ":
                 print ("Add", infantry, "as a target")
                 brit_targets.append(infantry)
-        #print ("British Hit are:", brits_hit)
+        #print ("Blue Hit are:", brits_hit)
         print ("You are claiming", len(brit_targets), "hits")
         for target in brit_targets:
             d1 = dice_roll()
             if target != "C":
-                print ("The Germans are shooting at Section", target, "and rolled", d1, "did that hit? [Hit (H) or Miss (M)]")
+                print ("The Reds are shooting at Section", target, "and rolled", d1, "did that hit? [Hit (H) or Miss (M)]")
             else:
-                print ("The Germans are shooting at the Commander and rolled", d1, "id that hit? [Hit (H) or Miss (M)]")
+                print ("The Reds are shooting at the Commander and rolled", d1, "id that hit? [Hit (H) or Miss (M)]")
             # Accept player response
             fire_result = input (">>")
             fire_result = fire_result.upper()
@@ -253,14 +253,14 @@ while True:
                     #print ("Unknown target - Hit ignored")
                     blue_hits -= 1
             elif fire_result == "M":
-                print ("The German defensive fire was ineffective")
+                print ("The Red defensive fire was ineffective")
             else:
                 print("You typed", fire_result, "which did not make any sense, so we are counting that as a MISS")
 
     #
-    # German Auto Rally
+    # Red Auto Rally
     #
-    german_status = "Active"
+    Red_status = "Active"
     #
     # End Turn Housekeeping
     # Keep Audit Trail
@@ -273,10 +273,10 @@ while True:
     
     #finished = input( "Has the hill been taken?")
     #if finished.lower() == "yes":
-    # Base the end game decision being based on British Infantry location
+    # Base the end game decision being based on Blue Infantry location
     if (section1_location == "B5") or (section2_location == "B5") or (section3_location == "B5"):
         # Exit Game Block
-        print ("The hill has been taken, as a British section has stormed the enemy position at B5")
+        print ("The hill has been taken, as a Blue section has stormed the enemy position at B5")
         break
     else:
         # Increment Game Turn
