@@ -2,17 +2,53 @@
 # Version 1.0
 #
 # Mark Flanagan 16/05/2020
-# Simulation Engine
+# Wargame Simulation Engine
 #
-# Libraries
+# Python Libraries needed
 #
 from random import *
 #
+
+# Global Lists:
+dice_history = []
+fire_history_red = []
+fire_history_blue = []
+rally_history_blue = []
+
+# Range to Data Structures
+
+
+# Basic Dice Rolling Function
 def dice_roll():
-    # Dice 1
+    # 1 Dice
     dice = randint(1,6)
+    dice_history.append(dice)
     return dice
+
+# Print Game Board
+def print_board(t):
+    print("Turn", t)
+    print("Row A")
+    print("Row B")
+    print("Row C")
+
+# Dice History 
+def print_dice_history():
+    print()
+    print("============================")
+    print("        DICE HISTORY        ")
+    print("============================")
+    print()
 #
+    counter = 0
+    for d in dice_history:
+        print(d, " ", end = "")
+        counter += 1
+        if (counter%10)== 0:
+            print()
+    print()
+    print("============================")
+    print()
 #
 print ()
 print ("This is Take That Hill")
@@ -86,7 +122,7 @@ while True:
         print ("Section 3 is", section3_status, "being located in hex:", section3_location)     
     print ()
     #
-    # Game Block
+    # Game Turn Block
     # Sequence of Play for Turn
     #
     # Blue Phase
@@ -98,6 +134,9 @@ while True:
     # Does the Leader Move?
     # Note: The Leader is always Active
     ans0 = input ("Do you want to move the leader to another section? [1,2,3 or N]")
+    # Unrecognised input is assumed to mean "N" 
+    if ans0 not in ["1", "2", "3", "N"]:
+        ans0 = "N"
     if ans0.upper() != "N":
         try:
             if int(ans0) in [ 1, 2, 3]:
@@ -105,13 +144,14 @@ while True:
                 leader_in_section = int (ans0)
                 print ("The Leader has moved to Section", ans0)
             else:
-                prinf ("Unexpected Input", ans0, "the Leader stays where they are.")
+                print ("Unexpected Input", ans0, "the Leader stays where they are.")
         except ValueError as msg:
             print ("Unexpected input:", msg, "Leader stays where he is")
     #
     # Which Sections Move
     #
     if section1_status == "Active":
+        #To Do: Calculate list of valid move hexes"
         ans1 = input ("Do you want to move Section 1 [Hex or N]?")
         ans1.upper()
         if ans1 != "N":
@@ -134,35 +174,46 @@ while True:
             section3_status = "Spent"
     print ("End of Blue Movement")
     print ()
+
+    if (section1_location == "B5") or (section2_location == "B5") or (section3_location == "B5"):
+        # Game Over
+        break
+    
     #
     # Blue Fire
     #
     print ("Blue Fire")
     if section1_status == "Active":
-        fire1 = input ("Section 1 Fires at B5, does it hit?")
+        fire1 = dice_roll()
+        print("Section 1 Fires at B5 from hex", section1_location, "rolling,", fire1, "does it hit?")
+        user_input = input("[Y or N]")
         section1_status = "Spent"
-        if fire1.upper() == "Y":
+        if user_input.upper() == "Y":
             # Section 1 fires and hits the Reds in B5
-            print ("Good shot- Section 1")
+            print ("Effective suppressive fire from Section 1")
             red_hits += 1
             Red_status = "Spent"
     if section2_status == "Active":
-        fire2 = input ("Section 2 Fires at B5, does it hit?")
+        fire2 = dice_roll()
+        print("Section 2 Fires at B5 from hex", section2_location, "rolling,", fire2, "does it hit?")
+        user_input = input("[Y or N]")
         section2_status = "Spent"
-        if fire2.upper() == "Y":
+        if user_input.upper() == "Y":
             # Section 2 fires and hits the Reds in B5
-            print ("Good shot - Section 2")
+            print ("Effective suppressive fire from Section 2")
             red_hits += 1
             Red_status = "Spent"
     if section3_status == "Active":
-        fire3 = input ("Section 3 Fires at B5, does it hit?")
+        fire3 = dice_roll()
+        print("Section 3 Fires at B5 from hex", section3_location, "rolling,", fire3, "does it hit?")
+        user_input = input("[Y or N]")
         section3_status = "Spent"
-        if fire3.upper() == "Y":
+        if user_input.upper() == "Y":
             # Section 2 fires and hits the Reds in B5
-            print ("Good Shot - Section 3")
+            print ("Effective suppressive fire from Section 3")
             red_hits += 1
             Red_status = "Spent"
-    print ("End of Blue Fire")
+    print ("End of Blue Fire Pase")
     print ()
     #
     # Blue Rally
@@ -184,43 +235,51 @@ while True:
                 print ("Leader in same Hex - Section 1 Auto Rally")
                 section1_status = "Active"
         else: 
-            rally1 = input ("Does Section 1 Rally[Y or N]?")
-            if rally1.upper() == "Y":
+            rally1 = dice_roll()
+            print("Leader is in hex", leader_location, "- Does Section 1 in hex,", section1_location, "Rally on a,", rally1)
+            user_input = input("[Y or N]?")
+            if user_input.upper() == "Y":
                 # Section 1 is Rallied
-                print ("Huzzah - Section 1 is rallied")
+                print ("Section 1 is rallied")
                 section1_status = "Active"
     if section2_status == "Spent":
         if section2_location == leader_location:
             print ("Leader in same Hex - Section 2 Auto Rally")
             section2_status = "Active"
         else:
-            rally2 = input ("Does Section 2 Rally[Y or N]?")
-            if rally2.upper() == "Y":
+            rally2 = dice_roll()
+            print("Leader is in hex", leader_location, "- Does Section 2 in hex,", section2_location, "Rally on a,", rally2)
+            user_input = input("[Y or N]?")
+            if user_input.upper() == "Y":
                 # Section 2 is Rallied
-                print ("Huzzah - Section 2 is rallied")
+                print ("Section 2 is rallied")
                 section2_status = "Active"
     if section3_status == "Spent":
         if section3_location == leader_location:
             print ("Leader in same Hex - Section 3 Auto Rally")
             section3_status = "Active"
         else:
-            rally3 = input ("Does Section 3 Rally[Y or N]?")
-            if rally3.upper() == "Y":
+            rally3 = dice_roll()
+            print("Leader is in hex", leader_location, "- Does Section 3 in hex,", section3_location, "Rally on a,", rally3)
+            user_input = input("[Y or N]?")
+            if user_input.upper() == "Y":
                 # Section 3 is Rallied
-                print ("Huzzah - Section 3 is rallied")
+                print ("Section 3 is rallied")
                 section3_status = "Active"
     print ()
     #
     # Red Phase
+    #
     print ("Red Phase: Turn", turns_played)
     # Fire
     if Red_status == "Spent":
-        print ("Good Shooting! Effective suppressing fire is making the Reds hunkering down")
+        print ("Good Shooting by Blue! Effective suppressing fire is making the Reds hunkering down")
     elif (section1_location == "B5") or (section2_location == "B5") or (section3_location == "B5"):
         print ("The Reds cannot fire as their position is being overrun")
     else:
         Red_status = "Spent"
         brit_targets = []
+        enemy = []
         enemy = input ("Who did you shoot at [1, 2, 3, C]?")
         for infantry in enemy:
             if infantry != " ":
@@ -231,14 +290,19 @@ while True:
         for target in brit_targets:
             d1 = dice_roll()
             if target != "C":
-                print ("The Reds are shooting at Section", target, "and rolled", d1, "did that hit? [Hit (H) or Miss (M)]")
+                if target == 1:
+                    print ("The Reds are shooting at Section", target, "in hex", section1_location, "and rolled a", d1, "did that hit? [Y or N]")
+                elif target ==2:     
+                    print ("The Reds are shooting at Section", target, "in hex", section2_location, "and rolled a", d1, "did that hit? [Y or N]")
+                else:
+                    print ("The Reds are shooting at Section", target, "in hex", section3_location, "and rolled a", d1, "did that hit? [Y or N]")
             else:
-                print ("The Reds are shooting at the Commander and rolled", d1, "id that hit? [Hit (H) or Miss (M)]")
+                print ("The Reds are shooting at the Commander in hex,", leader_location, "and rolled", d1, "did that hit? [Y or N]")
             # Accept player response
             fire_result = input (">>")
             fire_result = fire_result.upper()
             #print ("Hit=", hit,":", sep="")
-            if fire_result == "H": 
+            if fire_result == "Y": 
                 blue_hits += 1
                 if target == "1":
                     section1_status = "Spent"
@@ -247,12 +311,12 @@ while True:
                 elif target == "3":
                     section3_status = "Spent"
                 elif target == "C":
-                    print ("The commnder nearly copped it")
+                    print ("The commnder is under fire")
                 else:
                     # Ignore spaces in string 
                     #print ("Unknown target - Hit ignored")
                     blue_hits -= 1
-            elif fire_result == "M":
+            elif fire_result == "N":
                 print ("The Red defensive fire was ineffective")
             else:
                 print("You typed", fire_result, "which did not make any sense, so we are counting that as a MISS")
@@ -274,7 +338,9 @@ while True:
     #finished = input( "Has the hill been taken?")
     #if finished.lower() == "yes":
     # Base the end game decision being based on Blue Infantry location
-    if (section1_location == "B5") or (section2_location == "B5") or (section3_location == "B5"):
+    if (section1_location == "B5") or \
+        (section2_location == "B5") or \
+        (section3_location == "B5"):
         # Exit Game Block
         print ("The hill has been taken, as a Blue section has stormed the enemy position at B5")
         break
@@ -298,4 +364,12 @@ print ("Blue took ", blue_hits, "hits")
 print ("Red took", red_hits, "hits")
 print ("Well done!")
 print ()
-print ("Thank you for playing!") 
+#
+# End of Game Analysis
+#
+# Dice Rolls were ...
+print_dice_history()
+#
+# Write Game Log to File
+print("Game Data saved ..")
+print("Thank you for playing!") 
