@@ -25,6 +25,45 @@ def dice_roll():
     dice_history.append(dice)
     return dice
 
+# Fire "Range" and "To Hit" to/from Hex B5
+def score_to_hit(hex, firer):
+    to_hit_score_and_range = []
+    hex = hex.upper()
+    firer = firer.upper()
+    the_range = 0
+    to_hit = 0
+    if (hex == "A4") or (hex=="B4") or (hex=="C4"):
+        the_range = 1
+        to_hit = 2
+    elif (hex == "A3") or (hex=="B3") or (hex=="C3"):
+        the_range = 2
+        to_hit = 3
+    elif (hex == "A2") or (hex=="B2") or (hex=="C2"):
+        the_range = 3
+        to_hit = 4
+    elif (hex == "A1") or (hex=="B1") or (hex=="C1"):
+        the_range = 4
+        to_hit = 5
+    elif (hex == "A") or (hex=="B") or (hex=="C"):
+        if firer == "BLUE":
+            the_range = 5
+            to_hit = 6
+        elif firer == "RED":
+            the_range = 5
+            to_hit = 7
+        else:
+            print("Firer,", firer, "not known? [miss]")
+            the_range = 7
+            to_hit = 7
+    else:
+        print("Error: Target or Shooter Hex", hex, "not recognised! [miss]")
+        the_range = 6
+        to_hit = 7
+    # Create a return value list [<to_hit_score>, <range>] 
+    to_hit_score_and_range.append(to_hit)
+    to_hit_score_and_range.append(the_range)
+    return to_hit_score_and_range
+
 # Print Game Board
 def print_board(t):
     print("Turn", t)
@@ -84,7 +123,10 @@ section3_location = input("Where is Section 3?[A, B or C]").upper()
 leader_in_section = int(input("Which section is the leader with? [1, 2, or 3]"))
 print ()
 # Note: The Red Section is always in B5
-Red_location = "B5" 
+Red_location = "B5"
+#
+# Main Game Loop
+#
 while True:
     print ("Blue Phase: Turn", turns_played)
     #
@@ -128,25 +170,31 @@ while True:
     # Blue Phase
     # Blue Orders: THey will either Move or Fire
     # Move
+    #
     print ()
     print ("Blue Move")
     #
     # Does the Leader Move?
     # Note: The Leader is always Active
-    ans0 = input ("Do you want to move the leader to another section? [1,2,3 or N]")
-    # Unrecognised input is assumed to mean "N" 
-    if ans0 not in ["1", "2", "3", "N"]:
-        ans0 = "N"
-    if ans0.upper() != "N":
-        try:
-            if int(ans0) in [ 1, 2, 3]:
-                # Which Section?
-                leader_in_section = int (ans0)
-                print ("The Leader has moved to Section", ans0)
-            else:
-                print ("Unexpected Input", ans0, "the Leader stays where they are.")
-        except ValueError as msg:
-            print ("Unexpected input:", msg, "Leader stays where he is")
+    #
+    # Apart from the first turn 
+    # Ask if the Blue commander wants to hop between sections
+    #
+    if turns_played != 1: 
+        ans0 = input ("Do you want to move the leader to another section? [1,2,3 or N]")
+        # Unrecognised input is assumed to mean "N" 
+        if ans0 not in ["1", "2", "3", "N"]:
+            ans0 = "N"
+        if ans0.upper() != "N":
+            try:
+                if int(ans0) in [ 1, 2, 3]:
+                    # Which Section?
+                    leader_in_section = int (ans0)
+                    print ("The Leader has moved to Section", ans0)
+                else:
+                    print ("Unexpected Input", ans0, "the Leader stays where they are.")
+            except ValueError as msg:
+                print ("Unexpected input:", msg, "Leader stays where he is")
     #
     # Which Sections Move
     #
@@ -181,38 +229,54 @@ while True:
     
     #
     # Blue Fire
+    # Note to self: Make a "Blue Fire" function
     #
     print ("Blue Fire")
     if section1_status == "Active":
         fire1 = dice_roll()
-        print("Section 1 Fires at B5 from hex", section1_location, "rolling,", fire1, "does it hit?")
-        user_input = input("[Y or N]")
+        needs = score_to_hit(section1_location, "BLUE")
+        to_hit = needs[0]
+        at_range = needs[1]
+        print("Section 1 Fires at B5 from hex", section1_location, \
+              "rolling,", fire1, "requires a", to_hit, "to hit, at range", at_range)
         section1_status = "Spent"
-        if user_input.upper() == "Y":
+        if fire1 >= to_hit:
             # Section 1 fires and hits the Reds in B5
             print ("Effective suppressive fire from Section 1")
             red_hits += 1
             Red_status = "Spent"
+        else:
+            print("Section 1 - Missed")
     if section2_status == "Active":
         fire2 = dice_roll()
-        print("Section 2 Fires at B5 from hex", section2_location, "rolling,", fire2, "does it hit?")
-        user_input = input("[Y or N]")
+        needs = score_to_hit(section2_location, "BLUE")
+        to_hit = needs[0]
+        at_range = needs[1]  
+        print("Section 2 Fires at B5 from hex", section2_location, \
+              "rolling,", fire2, "requires a", to_hit, "to hit, at range", at_range)
         section2_status = "Spent"
-        if user_input.upper() == "Y":
+        if fire2 >= to_hit:
             # Section 2 fires and hits the Reds in B5
             print ("Effective suppressive fire from Section 2")
             red_hits += 1
             Red_status = "Spent"
+        else:
+            print("Section 2 - Missed")
     if section3_status == "Active":
         fire3 = dice_roll()
-        print("Section 3 Fires at B5 from hex", section3_location, "rolling,", fire3, "does it hit?")
-        user_input = input("[Y or N]")
+        needs = score_to_hit(section3_location, "BLUE")
+        to_hit = needs[0]
+        at_range = needs[1]
+        print("Section 3 Fires at B5 from hex", section3_location, \
+              "rolling,", fire3, "requires a", to_hit, "to hit, at range", at_range)
         section3_status = "Spent"
-        if user_input.upper() == "Y":
+        if fire3 >= to_hit:
             # Section 2 fires and hits the Reds in B5
             print ("Effective suppressive fire from Section 3")
             red_hits += 1
             Red_status = "Spent"
+        else:
+            print("Section 3 - Missed")
     print ("End of Blue Fire Pase")
     print ()
     #
@@ -283,26 +347,50 @@ while True:
         enemy = input ("Who did you shoot at [1, 2, 3, C]?")
         for infantry in enemy:
             if infantry != " ":
-                print ("Add", infantry, "as a target")
+                # print ("Add", infantry, "as a target")
                 brit_targets.append(infantry)
         #print ("Blue Hit are:", brits_hit)
-        print ("You are claiming", len(brit_targets), "hits")
+        print ("You are claiming", len(brit_targets), "targets")
         for target in brit_targets:
             d1 = dice_roll()
             if target != "C":
                 if target == 1:
-                    print ("The Reds are shooting at Section", target, "in hex", section1_location, "and rolled a", d1, "did that hit? [Y or N]")
-                elif target ==2:     
-                    print ("The Reds are shooting at Section", target, "in hex", section2_location, "and rolled a", d1, "did that hit? [Y or N]")
+                    needs = score_to_hit(section1_location, "RED")
+                    to_hit = needs[0]
+                    at_range = needs[1]
+                    if at_range <= 6:
+                        print ("The Reds are shooting at Section", target, "in hex", \
+                               section1_location, "and rolled a", d1, "requiring a", to_hit, "at range", at_range)
+                    else:
+                        print ("Target at", section1_location, "is in the treeline and cannot be hit")
+                elif target ==2:
+                    needs = score_to_hit(section2_location, "RED")
+                    to_hit = needs[0]
+                    at_range = needs[1]
+                    if at_range <= 6:
+                        print ("The Reds are shooting at Section", target, "in hex", \
+                               section2_location, "and rolled a", d1, "requiring a", to_hit, "at_range", at_range)
+                    else:
+                        print ("Target at", section2_location, "is in the treeline and cannot be hit")
                 else:
-                    print ("The Reds are shooting at Section", target, "in hex", section3_location, "and rolled a", d1, "did that hit? [Y or N]")
+                    needs = score_to_hit(section3_location, "RED")
+                    to_hit = needs[0]
+                    at_range = needs[1]
+                    if at_range <= 6:
+                        print ("The Reds are shooting at Section", target, "in hex", \
+                               section3_location, "and rolled a", d1, "requiring a", to_hit, "at range", at_range)
+                    else:
+                        print ("Target at", section2_location, "is in the treeline and cannot be hit")
             else:
-                print ("The Reds are shooting at the Commander in hex,", leader_location, "and rolled", d1, "did that hit? [Y or N]")
-            # Accept player response
-            fire_result = input (">>")
-            fire_result = fire_result.upper()
-            #print ("Hit=", hit,":", sep="")
-            if fire_result == "Y": 
+                needs = score_to_hit(leader_location, "RED")
+                to_hit = needs[0]
+                at_range = needs[1]
+                if at_range <= 6:
+                    print ("The Reds are shooting at the Commander in hex,", leader_location, \
+                           "and rolled", d1, "requiring a", to_hit, "at range", at_range)
+                else:
+                    print ("Target at", leader_location, "is in the treeline and cannot be hit")
+            if d1 >= to_hit:
                 blue_hits += 1
                 if target == "1":
                     section1_status = "Spent"
@@ -316,11 +404,10 @@ while True:
                     # Ignore spaces in string 
                     #print ("Unknown target - Hit ignored")
                     blue_hits -= 1
-            elif fire_result == "N":
+            elif d1 < to_hit:
                 print ("The Red defensive fire was ineffective")
             else:
-                print("You typed", fire_result, "which did not make any sense, so we are counting that as a MISS")
-
+                print("You typed", d1, "which did not make any sense, so we are counting that as a MISS")
     #
     # Red Auto Rally
     #
