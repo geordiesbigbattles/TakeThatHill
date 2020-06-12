@@ -15,8 +15,12 @@ fire_history_red = []
 fire_history_blue = []
 rally_history_blue = []
 
-# Range to Data Structures
-hex_to_hex = [{ "section": "A4", "leader": "A", "range": 4, "rally": 5},
+# Rally - Range Section to Leader - Data Structures
+hex_to_hex = [
+            #
+            # A Hex Row
+            # 
+              { "section": "A4", "leader": "A", "range": 4, "rally": 5},
               { "section": "A3", "leader": "A", "range": 3, "rally": 4},
               { "section": "A2", "leader": "A", "range": 2, "rally": 3},
               { "section": "A1", "leader": "A", "range": 1, "rally": 2},
@@ -41,6 +45,70 @@ hex_to_hex = [{ "section": "A4", "leader": "A", "range": 4, "rally": 5},
               { "section": "A2", "leader": "A4", "range": 2, "rally": 3},
               { "section": "A1", "leader": "A4", "range": 3, "rally": 4},
               { "section": "A",  "leader": "A4", "range": 4, "rally": 5},
+            #
+              { "section": "A4", "leader": "B", "range": 5, "rally": 6},
+              { "section": "A3", "leader": "B", "range": 4, "rally": 5},
+              { "section": "A2", "leader": "B", "range": 3, "rally": 4},
+              { "section": "A1", "leader": "B", "range": 2, "rally": 3},
+              { "section": "A",  "leader": "B", "range": 1, "rally": 2},
+              { "section": "A4", "leader": "B1", "range": 4, "rally": 5},
+              { "section": "A3", "leader": "B1", "range": 3, "rally": 4},
+              { "section": "A2", "leader": "B1", "range": 2, "rally": 3},
+              { "section": "A1", "leader": "B1", "range": 1, "rally": 2},
+              { "section": "A",  "leader": "B1", "range": 1, "rally": 2},
+              { "section": "A4", "leader": "B2", "range": 3, "rally": 4},
+              { "section": "A3", "leader": "B2", "range": 2, "rally": 3},
+              { "section": "A2", "leader": "B2", "range": 1, "rally": 2},
+              { "section": "A1", "leader": "B2", "range": 1, "rally": 2},
+              { "section": "A",  "leader": "B2", "range": 2, "rally": 3},
+              { "section": "A4", "leader": "B3", "range": 2, "rally": 3},
+              { "section": "A3", "leader": "B3", "range": 1, "rally": 2},
+              { "section": "A2", "leader": "B3", "range": 1, "rally": 2},
+              { "section": "A1", "leader": "B3", "range": 2, "rally": 3},
+              { "section": "A",  "leader": "B3", "range": 3, "rally": 4},
+              { "section": "A4", "leader": "B4", "range": 1, "rally": 2},
+              { "section": "A3", "leader": "B4", "range": 1, "rally": 2},
+              { "section": "A2", "leader": "B4", "range": 2, "rally": 3},
+              { "section": "A1", "leader": "B4", "range": 3, "rally": 4},
+              { "section": "A",  "leader": "B4", "range": 4, "rally": 5},
+              { "section": "A4", "leader": "B5", "range": 1, "rally": 2},
+              { "section": "A3", "leader": "B5", "range": 2, "rally": 3},
+              { "section": "A2", "leader": "B5", "range": 3, "rally": 4},
+              { "section": "A1", "leader": "B5", "range": 4, "rally": 5},
+              { "section": "A",  "leader": "B5", "range": 5, "rally": 6},
+            #
+              { "section": "A4", "leader": "C", "range": 5, "rally": 6},
+              { "section": "A3", "leader": "C", "range": 4, "rally": 5},
+              { "section": "A2", "leader": "C", "range": 3, "rally": 4},
+              { "section": "A1", "leader": "C", "range": 2, "rally": 3},
+              { "section": "A",  "leader": "C", "range": 2, "rally": 3},
+              { "section": "A4", "leader": "C1", "range": 3, "rally": 4},
+              { "section": "A3", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "A2", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "A1", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "A",  "leader": "C1", "range": 1, "rally": 2},
+              { "section": "A4", "leader": "C2", "range": 3, "rally": 4},
+              { "section": "A3", "leader": "C2", "range": 2, "rally": 3},
+              { "section": "A2", "leader": "C2", "range": 2, "rally": 3},
+              { "section": "A1", "leader": "C2", "range": 2, "rally": 3},
+              { "section": "A",  "leader": "C2", "range": 3, "rally": 4},
+              { "section": "A4", "leader": "C3", "range": 2, "rally": 3},
+              { "section": "A3", "leader": "C3", "range": 2, "rally": 3},
+              { "section": "A2", "leader": "C3", "range": 2, "rally": 3},
+              { "section": "A1", "leader": "C3", "range": 3, "rally": 4},
+              { "section": "A",  "leader": "C3", "range": 4, "rally": 5},
+              { "section": "A4", "leader": "C4", "range": 2, "rally": 3},
+              { "section": "A3", "leader": "C4", "range": 2, "rally": 3},
+              { "section": "A2", "leader": "C4", "range": 3, "rally": 4},
+              { "section": "A1", "leader": "C4", "range": 4, "rally": 5},
+              { "section": "A",  "leader": "C4", "range": 5, "rally": 6}
+            #
+            # B Hex Row
+            #
+
+            #
+            # C Hex Row
+            #
              ]
 
 
