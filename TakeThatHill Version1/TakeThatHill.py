@@ -16,6 +16,32 @@ fire_history_blue = []
 rally_history_blue = []
 
 # Range to Data Structures
+hex_to_hex = [{ "section": "A4", "leader": "A", "range": 4, "rally": 5},
+              { "section": "A3", "leader": "A", "range": 3, "rally": 4},
+              { "section": "A2", "leader": "A", "range": 2, "rally": 3},
+              { "section": "A1", "leader": "A", "range": 1, "rally": 2},
+              { "section": "A",  "leader": "A", "range": 0, "rally": 0},
+              { "section": "A4", "leader": "A1", "range": 3, "rally": 4},
+              { "section": "A3", "leader": "A1", "range": 2, "rally": 3},
+              { "section": "A2", "leader": "A1", "range": 1, "rally": 2},
+              { "section": "A1", "leader": "A1", "range": 0, "rally": 0},
+              { "section": "A",  "leader": "A1", "range": 1, "rally": 2},
+              { "section": "A4", "leader": "A2", "range": 2, "rally": 3},
+              { "section": "A3", "leader": "A2", "range": 1, "rally": 2},
+              { "section": "A2", "leader": "A2", "range": 0, "rally": 0},
+              { "section": "A1", "leader": "A2", "range": 1, "rally": 2},
+              { "section": "A",  "leader": "A2", "range": 2, "rally": 3},
+              { "section": "A4", "leader": "A3", "range": 1, "rally": 2},
+              { "section": "A3", "leader": "A3", "range": 0, "rally": 0},
+              { "section": "A2", "leader": "A3", "range": 1, "rally": 2},
+              { "section": "A1", "leader": "A3", "range": 2, "rally": 3},
+              { "section": "A",  "leader": "A3", "range": 3, "rally": 4},
+              { "section": "A4", "leader": "A4", "range": 0, "rally": 0},
+              { "section": "A3", "leader": "A4", "range": 1, "rally": 2},
+              { "section": "A2", "leader": "A4", "range": 2, "rally": 3},
+              { "section": "A1", "leader": "A4", "range": 3, "rally": 4},
+              { "section": "A",  "leader": "A4", "range": 4, "rally": 5},
+             ]
 
 
 # Basic Dice Rolling Function
@@ -25,30 +51,56 @@ def dice_roll():
     dice_history.append(dice)
     return dice
 
+# Rally - Distance between Section and Leader
+def score_to_rally(section_location, leader_location):
+    to_rally_score_and_range = []
+    # Set result values as "too high" to indicate processing error
+    to_rally = 7
+    the_range = 7
+    # uppercase input
+    section_location = section_location.upper()
+    leader_location = leader_location.upper()
+    if section_location == leader_location:
+        # Auto Rally Scenario
+        to_rally = 0
+        the_range = 0
+    else:
+        for h in hex_to_hex:
+            #print ("Can you find the range?")
+            if (h["section"] == section_location) and (h["leader"] == leader_location):
+                to_rally = h["rally"]
+                the_range = h["range"]
+                break 
+    # Return values - Rally and Range
+    to_rally_score_and_range.append(to_rally)
+    to_rally_score_and_range.append(the_range)
+    return to_rally_score_and_range
+
 # Fire "Range" and "To Hit" to/from Hex B5
-def score_to_hit(hex, firer):
+def score_to_hit(target, firer):
     to_hit_score_and_range = []
-    hex = hex.upper()
+    target = target.upper()
     firer = firer.upper()
     the_range = 0
     to_hit = 0
-    if (hex == "A4") or (hex=="B4") or (hex=="C4"):
+    if (target == "A4") or (target=="B4") or (target=="C4"):
         the_range = 1
         to_hit = 2
-    elif (hex == "A3") or (hex=="B3") or (hex=="C3"):
+    elif (target == "A3") or (target=="B3") or (target=="C3"):
         the_range = 2
         to_hit = 3
-    elif (hex == "A2") or (hex=="B2") or (hex=="C2"):
+    elif (target == "A2") or (target=="B2") or (target=="C2"):
         the_range = 3
         to_hit = 4
-    elif (hex == "A1") or (hex=="B1") or (hex=="C1"):
+    elif (target == "A1") or (target=="B1") or (target=="C1"):
         the_range = 4
         to_hit = 5
-    elif (hex == "A") or (hex=="B") or (hex=="C"):
+    elif (target == "A") or (target=="B") or (target=="C"):
         if firer == "BLUE":
             the_range = 5
             to_hit = 6
         elif firer == "RED":
+            print("Are you in the Trees?")
             the_range = 5
             to_hit = 7
         else:
@@ -56,7 +108,7 @@ def score_to_hit(hex, firer):
             the_range = 7
             to_hit = 7
     else:
-        print("Error: Target or Shooter Hex", hex, "not recognised! [miss]")
+        print("Error: Target or Shooter hex", target, "not recognised! [miss]")
         the_range = 6
         to_hit = 7
     # Create a return value list [<to_hit_score>, <range>] 
@@ -301,8 +353,11 @@ while True:
         else: 
             rally1 = dice_roll()
             print("Leader is in hex", leader_location, "- Does Section 1 in hex,", section1_location, "Rally on a,", rally1)
-            user_input = input("[Y or N]?")
-            if user_input.upper() == "Y":
+            rally_data = score_to_rally(section1_location, leader_location)
+            print("Rally roll needed for range", rally_data[1], "is", rally_data[0], "and we rolled a", rally1)
+            #user_input = input("[Y or N]?")
+            #if user_input.upper() == "Y":
+            if rally1 >= rally_data[0]:
                 # Section 1 is Rallied
                 print ("Section 1 is rallied")
                 section1_status = "Active"
@@ -352,9 +407,11 @@ while True:
         #print ("Blue Hit are:", brits_hit)
         print ("You are claiming", len(brit_targets), "targets")
         for target in brit_targets:
+            print ("Target =", target)
             d1 = dice_roll()
             if target != "C":
-                if target == 1:
+                if target == "1":
+                    print("** section one location**", section1_location)
                     needs = score_to_hit(section1_location, "RED")
                     to_hit = needs[0]
                     at_range = needs[1]
@@ -363,7 +420,7 @@ while True:
                                section1_location, "and rolled a", d1, "requiring a", to_hit, "at range", at_range)
                     else:
                         print ("Target at", section1_location, "is in the treeline and cannot be hit")
-                elif target ==2:
+                elif target == "2":
                     needs = score_to_hit(section2_location, "RED")
                     to_hit = needs[0]
                     at_range = needs[1]
