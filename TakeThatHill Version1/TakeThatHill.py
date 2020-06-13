@@ -101,14 +101,193 @@ hex_to_hex = [
               { "section": "A3", "leader": "C4", "range": 2, "rally": 3},
               { "section": "A2", "leader": "C4", "range": 3, "rally": 4},
               { "section": "A1", "leader": "C4", "range": 4, "rally": 5},
-              { "section": "A",  "leader": "C4", "range": 5, "rally": 6}
+              { "section": "A",  "leader": "C4", "range": 5, "rally": 6},
             #
             # B Hex Row
             #
-
+              { "section": "B5", "leader": "A", "range": 5, "rally": 6},
+              { "section": "B4", "leader": "A", "range": 4, "rally": 5},
+              { "section": "B3", "leader": "A", "range": 3, "rally": 4},
+              { "section": "B2", "leader": "A", "range": 2, "rally": 3},
+              { "section": "B1", "leader": "A", "range": 1, "rally": 2},
+              { "section": "B",  "leader": "A", "range": 1, "rally": 2},
+              { "section": "B5", "leader": "A1", "range": 4, "rally": 5},        
+              { "section": "B4", "leader": "A1", "range": 3, "rally": 4},
+              { "section": "B3", "leader": "A1", "range": 2, "rally": 3},
+              { "section": "B2", "leader": "A1", "range": 1, "rally": 2},
+              { "section": "B1", "leader": "A1", "range": 1, "rally": 2},
+              { "section": "B",  "leader": "A1", "range": 2, "rally": 3},
+              { "section": "B5", "leader": "A2", "range": 5, "rally": 6},
+              { "section": "B4", "leader": "A2", "range": 2, "rally": 3},
+              { "section": "B3", "leader": "A2", "range": 1, "rally": 2},
+              { "section": "B2", "leader": "A2", "range": 1, "rally": 2},
+              { "section": "B1", "leader": "A2", "range": 2, "rally": 3},
+              { "section": "B",  "leader": "A2", "range": 3, "rally": 4},
+              { "section": "B5", "leader": "A3", "range": 2, "rally": 3},
+              { "section": "B4", "leader": "A3", "range": 1, "rally": 2},
+              { "section": "B3", "leader": "A3", "range": 1, "rally": 2},
+              { "section": "B2", "leader": "A3", "range": 2, "rally": 3},
+              { "section": "B1", "leader": "A3", "range": 3, "rally": 4},
+              { "section": "B",  "leader": "A3", "range": 4, "rally": 5},
+              { "section": "B5", "leader": "A4", "range": 1, "rally": 2},
+              { "section": "B4", "leader": "A4", "range": 1, "rally": 2},
+              { "section": "B3", "leader": "A4", "range": 2, "rally": 3},
+              { "section": "B2", "leader": "A4", "range": 3, "rally": 4},
+              { "section": "B1", "leader": "A4", "range": 4, "rally": 5},
+              { "section": "B",  "leader": "A4", "range": 5, "rally": 6},
+            #
+              { "section": "B5", "leader": "B", "range": 5, "rally": 6},
+              { "section": "B4", "leader": "B", "range": 4, "rally": 5},
+              { "section": "B3", "leader": "B", "range": 3, "rally": 4},
+              { "section": "B2", "leader": "B", "range": 2, "rally": 3},
+              { "section": "B1", "leader": "B", "range": 1, "rally": 2},
+              { "section": "B",  "leader": "B", "range": 0, "rally": 0},
+              { "section": "B5", "leader": "B1", "range": 4, "rally": 5},  
+              { "section": "B4", "leader": "B1", "range": 3, "rally": 4},
+              { "section": "B3", "leader": "B1", "range": 2, "rally": 3},
+              { "section": "B2", "leader": "B1", "range": 1, "rally": 2},
+              { "section": "B1", "leader": "B1", "range": 0, "rally": 0},
+              { "section": "B",  "leader": "B1", "range": 1, "rally": 2},
+              { "section": "B5", "leader": "B2", "range": 3, "rally": 4},
+              { "section": "B4", "leader": "B2", "range": 2, "rally": 3},
+              { "section": "B3", "leader": "B2", "range": 1, "rally": 2},
+              { "section": "B2", "leader": "B2", "range": 0, "rally": 0},
+              { "section": "B1", "leader": "B2", "range": 1, "rally": 2},
+              { "section": "B",  "leader": "B2", "range": 2, "rally": 3},
+              { "section": "B5", "leader": "B3", "range": 2, "rally": 3},
+              { "section": "B4", "leader": "B3", "range": 1, "rally": 2},
+              { "section": "B3", "leader": "B3", "range": 0, "rally": 0},
+              { "section": "B2", "leader": "B3", "range": 1, "rally": 2},
+              { "section": "B1", "leader": "B3", "range": 2, "rally": 3},
+              { "section": "B",  "leader": "B3", "range": 3, "rally": 4},
+              { "section": "B5", "leader": "B4", "range": 1, "rally": 2},
+              { "section": "B4", "leader": "B4", "range": 0, "rally": 0},
+              { "section": "B3", "leader": "B4", "range": 1, "rally": 2},
+              { "section": "B2", "leader": "B4", "range": 2, "rally": 3},
+              { "section": "B1", "leader": "B4", "range": 3, "rally": 4},
+              { "section": "B",  "leader": "B4", "range": 4, "rally": 5},
+              { "section": "B5", "leader": "B5", "range": 0, "rally": 0},
+              { "section": "B4", "leader": "B5", "range": 1, "rally": 2},
+              { "section": "B3", "leader": "B5", "range": 2, "rally": 3},
+              { "section": "B2", "leader": "B5", "range": 3, "rally": 4},
+              { "section": "B1", "leader": "B5", "range": 4, "rally": 5},
+              { "section": "B",  "leader": "B5", "range": 5, "rally": 6},
+            #
+              { "section": "B5", "leader": "C", "range": 5, "rally": 6},   
+              { "section": "B4", "leader": "C", "range": 4, "rally": 5},
+              { "section": "B3", "leader": "C", "range": 3, "rally": 4},
+              { "section": "B2", "leader": "C", "range": 2, "rally": 3},
+              { "section": "B1", "leader": "C", "range": 1, "rally": 2},
+              { "section": "B",  "leader": "C", "range": 1, "rally": 2},
+              { "section": "B5", "leader": "C!", "range": 4, "rally": 5},
+              { "section": "B4", "leader": "C1", "range": 3, "rally": 4},
+              { "section": "B3", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "B2", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "B1", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "B",  "leader": "C1", "range": 1, "rally": 2},
+              { "section": "B5", "leader": "C2", "range": 3, "rally": 4},
+              { "section": "B4", "leader": "C2", "range": 2, "rally": 3},
+              { "section": "B3", "leader": "C2", "range": 1, "rally": 2},
+              { "section": "B2", "leader": "C2", "range": 1, "rally": 2},
+              { "section": "B1", "leader": "C2", "range": 2, "rally": 3},
+              { "section": "B",  "leader": "C2", "range": 3, "rally": 4},
+              { "section": "B5", "leader": "C3", "range": 2, "rally": 3},
+              { "section": "B4", "leader": "C3", "range": 1, "rally": 2},
+              { "section": "B3", "leader": "C3", "range": 1, "rally": 2},
+              { "section": "B2", "leader": "C3", "range": 2, "rally": 3},
+              { "section": "B1", "leader": "C3", "range": 3, "rally": 4},
+              { "section": "B",  "leader": "C3", "range": 4, "rally": 5},
+              { "section": "B5", "leader": "C4", "range": 1, "rally": 2},
+              { "section": "B4", "leader": "C4", "range": 1, "rally": 2},
+              { "section": "B3", "leader": "C4", "range": 2, "rally": 3},
+              { "section": "B2", "leader": "C4", "range": 3, "rally": 4},
+              { "section": "B1", "leader": "C4", "range": 4, "rally": 5},
+              { "section": "B",  "leader": "C4", "range": 5, "rally": 6},
             #
             # C Hex Row
             #
+              { "section": "C4", "leader": "A", "range": 5, "rally": 6},
+              { "section": "C3", "leader": "A", "range": 4, "rally": 5},
+              { "section": "C2", "leader": "A", "range": 3, "rally": 4},
+              { "section": "C1", "leader": "A", "range": 2, "rally": 3},
+              { "section": "C",  "leader": "A", "range": 2, "rally": 3},
+              { "section": "C4", "leader": "A1", "range": 4, "rally": 5},
+              { "section": "C3", "leader": "A1", "range": 3, "rally": 4},
+              { "section": "C2", "leader": "A1", "range": 2, "rally": 3},
+              { "section": "C1", "leader": "A1", "range": 2, "rally": 3},
+              { "section": "C",  "leader": "A1", "range": 2, "rally": 3},
+              { "section": "C4", "leader": "A2", "range": 3, "rally": 4},
+              { "section": "C3", "leader": "A2", "range": 2, "rally": 3},
+              { "section": "C2", "leader": "A2", "range": 2, "rally": 3},
+              { "section": "C1", "leader": "A2", "range": 2, "rally": 3},
+              { "section": "C",  "leader": "A2", "range": 3, "rally": 4},
+              { "section": "C4", "leader": "A3", "range": 2, "rally": 3},
+              { "section": "C3", "leader": "A3", "range": 2, "rally": 3},
+              { "section": "C2", "leader": "A3", "range": 2, "rally": 3},
+              { "section": "C1", "leader": "A3", "range": 3, "rally": 4},
+              { "section": "C",  "leader": "A3", "range": 4, "rally": 5},
+              { "section": "C4", "leader": "A4", "range": 2, "rally": 3},
+              { "section": "C3", "leader": "A4", "range": 2, "rally": 3},
+              { "section": "C2", "leader": "A4", "range": 3, "rally": 4},
+              { "section": "C1", "leader": "A4", "range": 4, "rally": 5},
+              { "section": "C",  "leader": "A4", "range": 5, "rally": 6},
+            #
+              { "section": "C4", "leader": "B", "range": 5, "rally": 6},
+              { "section": "C3", "leader": "B", "range": 4, "rally": 5},
+              { "section": "C2", "leader": "B", "range": 3, "rally": 4},
+              { "section": "C1", "leader": "B", "range": 2, "rally": 3},
+              { "section": "C",  "leader": "B", "range": 1, "rally": 2},
+              { "section": "C4", "leader": "B1", "range": 4, "rally": 5},
+              { "section": "C3", "leader": "B1", "range": 3, "rally": 4},
+              { "section": "C2", "leader": "B1", "range": 2, "rally": 3},
+              { "section": "C1", "leader": "B1", "range": 1, "rally": 2},
+              { "section": "C",  "leader": "B1", "range": 1, "rally": 2},
+              { "section": "C4", "leader": "B2", "range": 3, "rally": 4},
+              { "section": "C3", "leader": "B2", "range": 2, "rally": 3},
+              { "section": "C2", "leader": "B2", "range": 1, "rally": 2},
+              { "section": "C1", "leader": "B2", "range": 1, "rally": 2},
+              { "section": "C",  "leader": "B2", "range": 2, "rally": 3},
+              { "section": "C4", "leader": "B3", "range": 2, "rally": 3},
+              { "section": "C3", "leader": "B3", "range": 1, "rally": 2},
+              { "section": "C2", "leader": "B3", "range": 1, "rally": 2},
+              { "section": "C1", "leader": "B3", "range": 2, "rally": 3},
+              { "section": "C",  "leader": "B3", "range": 3, "rally": 4},
+              { "section": "C4", "leader": "B4", "range": 1, "rally": 2},
+              { "section": "C3", "leader": "B4", "range": 1, "rally": 2},
+              { "section": "C2", "leader": "B4", "range": 2, "rally": 3},
+              { "section": "C1", "leader": "B4", "range": 3, "rally": 4},
+              { "section": "C",  "leader": "B4", "range": 4, "rally": 5},
+              { "section": "C4", "leader": "B5", "range": 1, "rally": 2},
+              { "section": "C3", "leader": "B5", "range": 2, "rally": 3},
+              { "section": "C2", "leader": "B5", "range": 3, "rally": 4},
+              { "section": "C1", "leader": "B5", "range": 4, "rally": 5},
+              { "section": "C",  "leader": "B5", "range": 5, "rally": 6},
+            #
+              { "section": "C4", "leader": "C", "range": 4, "rally": 5},
+              { "section": "C3", "leader": "C", "range": 3, "rally": 4},
+              { "section": "C2", "leader": "C", "range": 2, "rally": 3},
+              { "section": "C1", "leader": "C", "range": 1, "rally": 2},
+              { "section": "C",  "leader": "C", "range": 0, "rally": 0},
+              { "section": "C4", "leader": "C1", "range": 3, "rally": 4},
+              { "section": "C3", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "C2", "leader": "C1", "range": 1, "rally": 2},
+              { "section": "C1", "leader": "C1", "range": 0, "rally": 0},
+              { "section": "C",  "leader": "C1", "range": 1, "rally": 2},
+              { "section": "C4", "leader": "C2", "range": 2, "rally": 3},
+              { "section": "C3", "leader": "C2", "range": 1, "rally": 2},
+              { "section": "C2", "leader": "C2", "range": 0, "rally": 0},
+              { "section": "C1", "leader": "C2", "range": 1, "rally": 2},
+              { "section": "C",  "leader": "C2", "range": 2, "rally": 3},
+              { "section": "C4", "leader": "C3", "range": 1, "rally": 2},
+              { "section": "C3", "leader": "C3", "range": 0, "rally": 0},
+              { "section": "C2", "leader": "C3", "range": 1, "rally": 2},
+              { "section": "C1", "leader": "C3", "range": 2, "rally": 3},
+              { "section": "C",  "leader": "C3", "range": 3, "rally": 4},
+              { "section": "C4", "leader": "C4", "range": 0, "rally": 0},
+              { "section": "C3", "leader": "C4", "range": 1, "rally": 2},
+              { "section": "C2", "leader": "C4", "range": 2, "rally": 3},
+              { "section": "C1", "leader": "C4", "range": 3, "rally": 4},
+              { "section": "C",  "leader": "C4", "range": 4, "rally": 5}            
              ]
 
 
@@ -429,6 +608,8 @@ while True:
                 # Section 1 is Rallied
                 print ("Section 1 is rallied")
                 section1_status = "Active"
+            else:
+                print ("Section 1 has not rallied")
     if section2_status == "Spent":
         if section2_location == leader_location:
             print ("Leader in same Hex - Section 2 Auto Rally")
@@ -436,23 +617,33 @@ while True:
         else:
             rally2 = dice_roll()
             print("Leader is in hex", leader_location, "- Does Section 2 in hex,", section2_location, "Rally on a,", rally2)
-            user_input = input("[Y or N]?")
-            if user_input.upper() == "Y":
+            rally_data = score_to_rally(section2_location, leader_location)
+            print("Rally roll needed for range", rally_data[1], "is", rally_data[0], "and we rolled a", rally2)         
+            #user_input = input("[Y or N]?")
+            #if user_input.upper() == "Y":
+            if rally2 >= rally_data[0]:
                 # Section 2 is Rallied
                 print ("Section 2 is rallied")
                 section2_status = "Active"
+            else:
+                print ("Section 2 has not rallied")
     if section3_status == "Spent":
         if section3_location == leader_location:
             print ("Leader in same Hex - Section 3 Auto Rally")
             section3_status = "Active"
         else:
             rally3 = dice_roll()
+            rally_data = score_to_rally(section3_location, leader_location)
+            print("Rally roll needed for range", rally_data[1], "is", rally_data[0], "and we rolled a", rally3)    
             print("Leader is in hex", leader_location, "- Does Section 3 in hex,", section3_location, "Rally on a,", rally3)
-            user_input = input("[Y or N]?")
-            if user_input.upper() == "Y":
+            #user_input = input("[Y or N]?")           
+            #if user_input.upper() == "Y":
+            if rally3 >= rally_data[0]:
                 # Section 3 is Rallied
                 print ("Section 3 is rallied")
                 section3_status = "Active"
+            else:
+                print ("Section 3 has not rallied")
     print ()
     #
     # Red Phase
@@ -524,7 +715,7 @@ while True:
                 elif target == "3":
                     section3_status = "Spent"
                 elif target == "C":
-                    print ("The commnder is under fire")
+                    print ("The commander is under fire")
                 else:
                     # Ignore spaces in string 
                     #print ("Unknown target - Hit ignored")
