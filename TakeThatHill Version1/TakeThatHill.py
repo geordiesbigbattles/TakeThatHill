@@ -82,11 +82,11 @@ hex_to_hex = [
               { "section": "A2", "leader": "C", "range": 3, "rally": 4},
               { "section": "A1", "leader": "C", "range": 2, "rally": 3},
               { "section": "A",  "leader": "C", "range": 2, "rally": 3},
-              { "section": "A4", "leader": "C1", "range": 3, "rally": 4},
-              { "section": "A3", "leader": "C1", "range": 2, "rally": 3},
+              { "section": "A4", "leader": "C1", "range": 4, "rally": 5},
+              { "section": "A3", "leader": "C1", "range": 3, "rally": 4},
               { "section": "A2", "leader": "C1", "range": 2, "rally": 3},
               { "section": "A1", "leader": "C1", "range": 2, "rally": 3},
-              { "section": "A",  "leader": "C1", "range": 1, "rally": 2},
+              { "section": "A",  "leader": "C1", "range": 2, "rally": 3},
               { "section": "A4", "leader": "C2", "range": 3, "rally": 4},
               { "section": "A3", "leader": "C2", "range": 2, "rally": 3},
               { "section": "A2", "leader": "C2", "range": 2, "rally": 3},
@@ -182,9 +182,9 @@ hex_to_hex = [
               { "section": "B5", "leader": "C!", "range": 4, "rally": 5},
               { "section": "B4", "leader": "C1", "range": 3, "rally": 4},
               { "section": "B3", "leader": "C1", "range": 2, "rally": 3},
-              { "section": "B2", "leader": "C1", "range": 2, "rally": 3},
-              { "section": "B1", "leader": "C1", "range": 2, "rally": 3},
-              { "section": "B",  "leader": "C1", "range": 1, "rally": 2},
+              { "section": "B2", "leader": "C1", "range": 1, "rally": 2},
+              { "section": "B1", "leader": "C1", "range": 1, "rally": 2},
+              { "section": "B",  "leader": "C1", "range": 2, "rally": 3},
               { "section": "B5", "leader": "C2", "range": 3, "rally": 4},
               { "section": "B4", "leader": "C2", "range": 2, "rally": 3},
               { "section": "B3", "leader": "C2", "range": 1, "rally": 2},
@@ -297,6 +297,14 @@ def dice_roll():
     dice = randint(1,6)
     dice_history.append(dice)
     return dice
+
+# Section Legal Move Generator
+def section_legal_moves(section_hex):
+    legal_moves_list = []
+    for h in hex_to_hex:
+        if (section_hex == h["section"]) and (h["range"] == 1):
+            legal_moves_list.append(h["leader"])
+    return legal_moves_list
 
 # Rally - Distance between Section and Leader
 def score_to_rally(section_location, leader_location):
@@ -549,27 +557,49 @@ while True:
                     print ("Unexpected Input", ans0, "the Leader stays where they are.")
             except ValueError as msg:
                 print ("Unexpected input:", msg, "Leader stays where he is")
+    # Legal Move Lists
+    # Default: N omplies "No Move" meaning "Fire" instead
+    section1_legal_moves = [ 'N' ]
+    section2_legal_moves = [ 'N' ]
+    section3_legal_moves = [ 'N' ]
     #
-    # Which Sections Move
+    # Which Sections Move?
     #
     if section1_status == "Active":
-        #To Do: Calculate list of valid move hexes"
+        # Calculate list of valid move hexes"
+        section1_legal_moves.extend(section_legal_moves(section1_location))
+        print("Section 1 in",section1_location, "has Legal Moves of:", section1_legal_moves)
         ans1 = input ("Do you want to move Section 1 [Hex or N]?")
         ans1.upper()
+        while ans1.upper() not in section1_legal_moves:
+            print(ans1, "is not a valid legal hex, please retry")
+            ans1 = input ("Do you want to move Section 1 [Hex or N]?")
         if ans1 != "N":
             # Section used its action to move
             section1_location = ans1
             section1_status = "Spent"
     if section2_status == "Active":
+        # Calculate list of valid move hexes"
+        section2_legal_moves.extend(section_legal_moves(section2_location))
+        print("Section 2 in", section2_location, "has Legal Moves of:", section2_legal_moves)
         ans2 = input ("Do you want to move Section 2 [Hex or N]?")
         ans2 = ans2.upper()
+        while ans2.upper() not in section2_legal_moves:
+            print(ans2, "is not a valid legal hex, please retry")
+            ans2 = input ("Do you want to move Section 2 [Hex or N]?")
         if ans2 != "N":
             # Section used its action to move
             section2_location = ans2
             section2_status = "Spent"
     if section3_status == "Active":
+        # Calculate list of valid move hexes"
+        section3_legal_moves.extend(section_legal_moves(section3_location))
+        print("Section 2 in", section3_location, "has Legal Moves: of", section3_legal_moves)
         ans3 = input ("Do you want to move Section 3 [Hex or N]?")
         ans3 = ans3.upper()
+        while ans3.upper() not in section3_legal_moves:
+            print(ans3, "is not a valid legal hex, please retry")
+            ans3 = input ("Do you want to move Section 3 [Hex or N]?")
         if ans3 != "N":
             # Section used its action to move
             section3_location = ans3
