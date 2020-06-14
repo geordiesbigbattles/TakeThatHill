@@ -364,11 +364,62 @@ def score_to_hit(target, firer):
     return to_hit_score_and_range
 
 # Print Game Board
-def print_board(t):
-    print("Turn", t)
-    print("Row A")
-    print("Row B")
-    print("Row C")
+def print_game_board(turn, s1, s2, s3, leader):
+    print()
+    commander = ""
+    # Hexes
+    A = "....A"
+    B = "....B"
+    C = "....C"
+    A1 = A2 = A3 = A4 = B1 = B2 = B3 = B4 = C1 = C2 = C3 = C4 = "...."
+    B5 = ".XX."
+    # Where is the leader/commander?
+    if leader == 1:
+        commander = s1
+    elif leader == 2:
+        commander = s2
+    elif leader == 3:
+        commander = s3
+    else:
+        print("Cannot see where the commander is!", leader)
+    # Work out where the troops are:
+    troops = [ s1, s2, s3, commander]
+    hexes = [ {"hex":"A", "graphic":A}, \
+              {"hex":"A1", "graphic":A1}, {"hex":"A2", "graphic":A2}, {"hex":"A3", "graphic":A3},{"hex":"A4", "graphic":A4}, \
+              {"hex":"B", "graphic":B}, \
+              {"hex":"B1", "graphic":B1}, {"hex":"B2", "graphic":B2}, {"hex":"B3", "graphic":B3}, {"hex":"B4", "graphic":B4},{"hex":"B5", "graphic":B5},\
+              {"hex":"C", "graphic":C}, \
+              {"hex":"C1", "graphic":C1}, {"hex":"C2", "graphic":C2}, {"hex":"C3", "graphic":C3},{"hex":"C4", "graphic":C4}, \
+              ]
+    counter = 0
+    for t in troops:
+        #print("t =", t)
+        counter += 1
+        #print("Counter =", counter)
+        for h in hexes:
+            # print("h[hex] =", h["hex"])
+            if t == h["hex"]:
+                if counter == 1:
+                    h["graphic"] = 's'+ h["graphic"][1:5]
+                elif counter == 2:
+                    h["graphic"] = h["graphic"][0:1] + 's' + h["graphic"][2:5]
+                elif counter == 3:
+                    h["graphic"] = h["graphic"][0:2] + 's' + h["graphic"][3:5]
+                else:
+                    h["graphic"] = h["graphic"][0:3] + 'c' + h["graphic"][4:5]
+                #print("h[graphic]=", h["graphic"])
+    # Rows
+    #rowA = "Row A:     " + A + " " + A1 + " " + A2 + " " + A3 + " " + A4
+    rowA = "Row A:     " + hexes[0]["graphic"] + " " + hexes[1]["graphic"] + " " + hexes[2]["graphic"] + " " + hexes[3]["graphic"] + " " + hexes[4]["graphic"]
+    rowB = "Row B:    " +  hexes[5]["graphic"] + " " + hexes[6]["graphic"] + " " + hexes[7]["graphic"] + " " + hexes[8]["graphic"] + " " + hexes[9]["graphic"] + " " + hexes[10]["graphic"]
+    rowC = "Row C:     " + hexes[11]["graphic"] + " " + hexes[12]["graphic"] + " " + hexes[13]["graphic"] + " " + hexes[14]["graphic"] + " " + hexes[15]["graphic"]
+    # Print Board 
+    print("Turn", turn)
+    print()
+    print(rowA)
+    print(rowB)
+    print(rowC)
+    print()
 
 # Dice History 
 def print_dice_history():
@@ -409,9 +460,9 @@ Red_status = "Active"
 #
 # Game Board:
 #
-# Row 1: A, A1, A2, A3, A4
+# Row 1:  A, A1, A2, A3, A4
 # Row 2: B, B1, B2, B3, B4, B5 
-# Row 3: C, C1, C2, C3, C4
+# Row 3:  C, C1, C2, C3, C4
 #
 # Data Entry: Position of Blue Sections
 #
@@ -443,6 +494,10 @@ while True:
         # Report [Logic Error] Undefined Leader Position so assign leader back to Section 1  
         leader_hex = section1_location
         print ("Reporting program bug - Leader not Assigned to Section")
+    #
+    # Display Game Board
+    #
+    print_game_board(turns_played, section1_location, section2_location, section3_location, leader_in_section)
     #
     # Blue Sections 1..3
     #
