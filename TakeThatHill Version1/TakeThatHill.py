@@ -306,6 +306,21 @@ def section_legal_moves(section_hex):
             legal_moves_list.append(h["leader"])
     return legal_moves_list
 
+# Leader Legal Move Generator
+def leader_legal_moves(leader_location, troops):
+    legal_moves_list = []
+    possible_hexes = []
+    for h in hex_to_hex:
+        if (leader_location == h["section"]) and (h["range"] == 1):
+            possible_hexes.append(h["leader"])
+    print("Possible Hexes =", possible_hexes )
+    for p in possible_hexes:
+        if p in troops:
+            legal_moves_list.append(p)
+    print("Final list of legal moves = ", legal_moves_list)
+    return legal_moves_list
+
+
 # Rally - Distance between Section and Leader
 def score_to_rally(section_location, leader_location):
     to_rally_score_and_range = []
@@ -508,6 +523,7 @@ while True:
     print_game_board(turns_played, section1_location, section2_location, section3_location, leader_in_section)
     #
     # Blue Sections 1..3
+    # Where are they?
     #
     # Section 1
     if leader_in_section == 1:
@@ -542,17 +558,29 @@ while True:
     # Apart from the first turn 
     # Ask if the Blue commander wants to hop between sections
     #
-    if turns_played != 1: 
-        ans0 = input ("Do you want to move the leader to another section? [1,2,3 or N]")
+    if turns_played != 1:
+        leader_legal_moves_list = [ 'N' ]
+        troop_locations = [ section1_location, section2_location, section3_location]
+        leader_legal_moves_list.extend(leader_legal_moves(leader_location, troop_locations))
+        print("Leader Legal Moves =", leader_legal_moves_list)
+        ans0 = ""
+        while ans0.upper() not in leader_legal_moves_list:
+            ans0 = input ("Do you want to move the leader to another section? [Hex or N]")
         # Unrecognised input is assumed to mean "N" 
-        if ans0 not in ["1", "2", "3", "N"]:
-            ans0 = "N"
         if ans0.upper() != "N":
             try:
-                if int(ans0) in [ 1, 2, 3]:
+                leader_location = ans0.upper()
+                for t in troop_locations:
                     # Which Section?
-                    leader_in_section = int (ans0)
-                    print ("The Leader has moved to Section", ans0)
+                    if ans0.upper() == section1_location:
+                        leader_in_section = 1
+                        print ("The Leader has moved to Section", leader_in_section)
+                    elif ans0.upper() == section2_location:
+                        leader_in_section = 2
+                        print ("The Leader has moved to Section", leader_in_section)
+                    else:
+                        leader_in_section = 3
+                        print ("The Leader has moved to Section", leader_in_section)
                 else:
                     print ("Unexpected Input", ans0, "the Leader stays where they are.")
             except ValueError as msg:
@@ -594,7 +622,7 @@ while True:
     if section3_status == "Active":
         # Calculate list of valid move hexes"
         section3_legal_moves.extend(section_legal_moves(section3_location))
-        print("Section 2 in", section3_location, "has Legal Moves: of", section3_legal_moves)
+        print("Section 3 in", section3_location, "has Legal Moves: of", section3_legal_moves)
         ans3 = input ("Do you want to move Section 3 [Hex or N]?")
         ans3 = ans3.upper()
         while ans3.upper() not in section3_legal_moves:
