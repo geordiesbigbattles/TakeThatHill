@@ -7,6 +7,7 @@
 # Python Libraries needed
 #
 from random import *
+import matplotlib.pyplot as plt
 #
 
 # Global Lists:
@@ -587,6 +588,7 @@ while True:
             ans0 = ""
             while ans0.upper() not in leader_legal_moves_list:
                 ans0 = input ("Do you want to move the leader to another section? [Hex or N]")
+                ans0 = ans0.upper()
             # Unrecognised input is assumed to mean "N" 
             if ans0.upper() != "N":
                 try:
@@ -625,6 +627,7 @@ while True:
         while ans1.upper() not in section1_legal_moves:
             print(ans1, "is not a valid legal hex, please retry")
             ans1 = input ("Do you want to move Section 1 [Hex or N]?")
+            ans1 = ans1.upper()
         if ans1 != "N":
             # Section used its action to move
             section1_location = ans1
@@ -638,6 +641,7 @@ while True:
         while ans2.upper() not in section2_legal_moves:
             print(ans2, "is not a valid legal hex, please retry")
             ans2 = input ("Do you want to move Section 2 [Hex or N]?")
+            ans2 - ans2.upper()
         if ans2 != "N":
             # Section used its action to move
             section2_location = ans2
@@ -651,6 +655,7 @@ while True:
         while ans3.upper() not in section3_legal_moves:
             print(ans3, "is not a valid legal hex, please retry")
             ans3 = input ("Do you want to move Section 3 [Hex or N]?")
+            ans3 = ans3.upper()
         if ans3 != "N":
             # Section used its action to move
             section3_location = ans3
@@ -916,7 +921,12 @@ print ()
 #
 # Dice Rolls were ...
 print_dice_history()
+numbers = range(1,7)
+bars = [dice_history.count(n) for n in numbers]
+plt.bar(numbers,bars)
+plt.show()
 #
-# Write Game Log to File
+# Still to do - Write Game Log to File
+#
 print("Game Data saved ..")
 print("Thank you for playing!") 
