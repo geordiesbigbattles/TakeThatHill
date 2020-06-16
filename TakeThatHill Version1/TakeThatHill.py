@@ -313,11 +313,11 @@ def leader_legal_moves(leader_location, troops):
     for h in hex_to_hex:
         if (leader_location == h["section"]) and (h["range"] == 1):
             possible_hexes.append(h["leader"])
-    print("Possible Hexes =", possible_hexes )
+    #print("Possible Hexes =", possible_hexes )
     for p in possible_hexes:
         if p in troops:
             legal_moves_list.append(p)
-    print("Final list of legal moves = ", legal_moves_list)
+    #print("Final list of legal moves = ", legal_moves_list)
     return legal_moves_list
 
 
@@ -461,6 +461,34 @@ def print_dice_history():
     print()
     print("============================")
     print()
+
+# Information on the Blue forces staus
+def blue_sections_display(leader_in_section, \
+                          section1_status, section2_status, section3_status, \
+                          section1_location, section2_location, section3_location):
+        #
+        # Blue Sections 1..3
+        # Where are they?
+        #
+        # Section 1
+        print()
+        if leader_in_section == 1:
+            print ("Section 1 is", section1_status, "being located in hex:", section1_location, "with the Platoon Leader")
+        else:
+            print ("Section 1 is", section1_status, "being located in hex:", section1_location)
+        # Section 2
+        if leader_in_section == 2:
+            print ("Section 2 is", section2_status, "being located in hex:", section2_location, "with the Platoon Leader")
+        else:
+            print ("Section 2 is", section2_status, "being located in hex:", section2_location)
+        # Section 3
+        if leader_in_section == 3:
+            print ("Section 3 is", section3_status, "being located in hex:", section3_location, "with the Platoon Leader")
+        else:
+            print ("Section 3 is", section3_status, "being located in hex:", section3_location)     
+        print ()
+
+    
 #
 print ()
 print ("This is Take That Hill")
@@ -489,11 +517,21 @@ Red_status = "Active"
 #
 # Data Entry: Position of Blue Sections
 #
+# Data initialisation
+section1_location = ""
+section2_location = ""
+section3_location = ""
+leader_in_section = 0
+# Get values from user
 print ("What are the Blue Starting Positions")
-section1_location = input("Where is Section 1?[A, B or C]").upper()
-section2_location = input("Where is Section 2?[A, B or C]").upper()
-section3_location = input("Where is Section 3?[A, B or C]").upper()
-leader_in_section = int(input("Which section is the leader with? [1, 2, or 3]"))
+while section1_location not in ["A", "B", "C"]:
+    section1_location = input("Where is Section 1?[A, B or C]").upper()
+while section2_location not in ["A", "B", "C"]:
+    section2_location = input("Where is Section 2?[A, B or C]").upper()
+while section3_location not in ["A", "B", "C"]:
+    section3_location = input("Where is Section 3?[A, B or C]").upper()
+while leader_in_section not in [1, 2, 3]:
+    leader_in_section = int(input("Which section is the leader with? [1, 2, or 3]"))
 print ()
 # Note: The Red Section is always in B5
 Red_location = "B5"
@@ -520,27 +558,9 @@ while True:
     #
     # Display Game Board
     #
-    print_game_board(turns_played, section1_location, section2_location, section3_location, leader_in_section)
-    #
-    # Blue Sections 1..3
-    # Where are they?
-    #
-    # Section 1
-    if leader_in_section == 1:
-        print ("Section 1 is", section1_status, "being located in hex:", section1_location, "with the Platoon Leader")
-    else:
-        print ("Section 1 is", section1_status, "being located in hex:", section1_location)
-    # Section 2
-    if leader_in_section == 2:
-        print ("Section 2 is", section2_status, "being located in hex:", section2_location, "with the Platoon Leader")
-    else:
-        print ("Section 2 is", section2_status, "being located in hex:", section2_location)
-    # Section 3
-    if leader_in_section == 3:
-        print ("Section 3 is", section3_status, "being located in hex:", section3_location, "with the Platoon Leader")
-    else:
-        print ("Section 3 is", section3_status, "being located in hex:", section3_location)     
-    print ()
+    print_game_board(turns_played, section1_location, section2_location, section3_location, leader_in_section)    
+    blue_sections_display(leader_in_section, section1_status, section2_status, section3_status, \
+                          section1_location, section2_location, section3_location)
     #
     # Game Turn Block
     # Sequence of Play for Turn
@@ -562,31 +582,34 @@ while True:
         leader_legal_moves_list = [ 'N' ]
         troop_locations = [ section1_location, section2_location, section3_location]
         leader_legal_moves_list.extend(leader_legal_moves(leader_location, troop_locations))
-        print("Leader Legal Moves =", leader_legal_moves_list)
-        ans0 = ""
-        while ans0.upper() not in leader_legal_moves_list:
-            ans0 = input ("Do you want to move the leader to another section? [Hex or N]")
-        # Unrecognised input is assumed to mean "N" 
-        if ans0.upper() != "N":
-            try:
-                leader_location = ans0.upper()
-                for t in troop_locations:
-                    # Which Section?
-                    if ans0.upper() == section1_location:
-                        leader_in_section = 1
-                        print ("The Leader has moved to Section", leader_in_section)
-                    elif ans0.upper() == section2_location:
-                        leader_in_section = 2
-                        print ("The Leader has moved to Section", leader_in_section)
+        if len(leader_legal_moves_list) > 1:
+            print("Leader Legal Moves =", leader_legal_moves_list)
+            ans0 = ""
+            while ans0.upper() not in leader_legal_moves_list:
+                ans0 = input ("Do you want to move the leader to another section? [Hex or N]")
+            # Unrecognised input is assumed to mean "N" 
+            if ans0.upper() != "N":
+                try:
+                    leader_location = ans0.upper()
+                    for t in troop_locations:
+                        # Which Section?
+                        if ans0.upper() == section1_location:
+                            leader_in_section = 1
+                            #print ("The Leader has moved to Section", leader_in_section)
+                        elif ans0.upper() == section2_location:
+                            leader_in_section = 2
+                            #print ("The Leader has moved to Section", leader_in_section)
+                        else:
+                            leader_in_section = 3
+                            #print ("The Leader has moved to Section", leader_in_section)
                     else:
-                        leader_in_section = 3
-                        print ("The Leader has moved to Section", leader_in_section)
-                else:
-                    print ("Unexpected Input", ans0, "the Leader stays where they are.")
-            except ValueError as msg:
-                print ("Unexpected input:", msg, "Leader stays where he is")
-    # Legal Move Lists
+                        print ("Unexpected Input", ans0, "the Leader stays where they are.")
+                except ValueError as msg:
+                    print ("Unexpected input:", msg, "Leader stays where he is")
+    #
+    # Section - Legal Move Lists
     # Default: N omplies "No Move" meaning "Fire" instead
+    #
     section1_legal_moves = [ 'N' ]
     section2_legal_moves = [ 'N' ]
     section3_legal_moves = [ 'N' ]
@@ -746,9 +769,9 @@ while True:
             section3_status = "Active"
         else:
             rally3 = dice_roll()
+            print("Leader is in hex", leader_location, "- Does Section 3 in hex,", section3_location, "Rally on a,", rally3)
             rally_data = score_to_rally(section3_location, leader_location)
             print("Rally roll needed for range", rally_data[1], "is", rally_data[0], "and we rolled a", rally3)    
-            print("Leader is in hex", leader_location, "- Does Section 3 in hex,", section3_location, "Rally on a,", rally3)
             #user_input = input("[Y or N]?")           
             #if user_input.upper() == "Y":
             if rally3 >= rally_data[0]:
@@ -762,7 +785,15 @@ while True:
     # Red Phase
     #
     print ("Red Phase: Turn", turns_played)
-    # Fire
+    #
+    # Show the state of play to the Red Player
+    #
+    print_game_board(turns_played, section1_location, section2_location, section3_location, leader_in_section)
+    blue_sections_display(leader_in_section, section1_status, section2_status, section3_status, \
+                          section1_location, section2_location, section3_location)    
+    #
+    # Red Fire Combat
+    #
     if Red_status == "Spent":
         print ("Good Shooting by Blue! Effective suppressing fire is making the Reds hunkering down")
     elif (section1_location == "B5") or (section2_location == "B5") or (section3_location == "B5"):
