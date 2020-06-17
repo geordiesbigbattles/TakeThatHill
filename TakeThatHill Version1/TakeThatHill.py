@@ -7,7 +7,9 @@
 # Python Libraries needed
 #
 from random import *
-import matplotlib.pyplot as plt
+
+# Taking matplotlib out to see if it gets round Ian's runtime issue
+#import matplotlib.pyplot as plt
 #
 
 # Global Lists:
@@ -1081,8 +1083,8 @@ print ()
 print_dice_history()
 numbers = range(1,7)
 bars = [dice_history.count(n) for n in numbers]
-plt.bar(numbers,bars)
-plt.show()
+#plt.bar(numbers,bars)
+#plt.show()
 #
 # Still to do - Write Game Log to File
 #
