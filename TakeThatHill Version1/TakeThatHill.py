@@ -321,6 +321,23 @@ def leader_legal_moves(leader_location, troops):
     #print("Final list of legal moves = ", legal_moves_list)
     return legal_moves_list
 
+# Distance d between a and b
+def a_to_b(a, b):
+    # Set result values as "too high" to indicate processing error
+    d = 7
+    # uppercase input
+    a = a.upper()
+    b = b.upper()
+    if a == b:
+        # Same Hex
+        d = 0
+    else:
+        for h in hex_to_hex:
+            #print ("Can you find the range?")
+            if (h["section"] == a) and (h["leader"] == b):
+                d = h["range"]
+                break 
+    return d
 
 # Rally - Distance between Section and Leader
 def score_to_rally(section_location, leader_location):
@@ -387,7 +404,110 @@ def score_to_hit(target, firer):
     to_hit_score_and_range.append(the_range)
     return to_hit_score_and_range
 
+# What are the valid Blue targets for Red?
+def get_blue_targets(section1, section2, section3, leader_section):
+    # Assign leader location to section
+    if leader_section == 1:
+        leader = section1
+        print("Assign Leader to Squad 1 in location", section1)
+    elif leader_section == 2:
+        leader = section2
+        print("Assign Leader to Squad 2 in location", section2)
+    elif leader_section == 3:
+        leader = section3
+        print("Assign Leader to Squad 3 in location", section3)
+    else:
+        print("Unknown section associated with leader", )
+    target_list = []
+    #
+    # Is there a Mega Cluster?
+    #
+    if (section1 == section2) and (section2 == section3):
+        # Everyone in the same hex so return a Mega Cluster of targets
+        target_list = [ ["1", "2", "3", "C"] ]
+        return target_list
+    # Otherwise figure out the targets
+    # First set singleton flags to true
+    s1 = True
+    s2 = True
+    s3 = True
+    # There are three sections and aCommander to consider
+    # Is any section adjacent to another signify a cluster of targets?
+    #
+    # Calculate distances between sections
+    # Units in base line hexes [A, B, C] are immune from Red defensive fire
+    #
+    # Distance between sections 1 and 2
+    s1_to_s2 = a_to_b(section1, section2)
+    print ("The range between section 1 and section 2 is,", s1_to_s2)
+    # Distance between sections 1 and 3
+    s1_to_s3 = a_to_b(section1, section3)
+    print ("The range between section 1 and section 3 is,", s1_to_s3)
+
+    s2_to_s3 = a_to_b(section2, section3)
+    print ("The range between section 2 and section 3 is,", s2_to_s3)
+
+    # What about combinations with section 1?
+    # If section 1 to section 2 = range <= 1 there is a cluster
+    if (s1_to_s2 <= 1) and ((section1 not in [ "A", "B", "C" ]) or (section2 not in [ "A", "B", "C" ])):
+        s1 = False
+        s2 = False
+        if (leader == section1) or (leader == section2):
+            target_list.append(["1", "2", "C"])
+        else:
+            target_list.append(["1", "2"])
+    # if section 1 to section 3 = range <= 1 there is a cluster
+    if (s1_to_s3 <= 1) and ((section1 not in [ "A", "B", "C" ]) or (section3 not in [ "A", "B", "C" ])):
+        s1 = False
+        s3 = False
+        if (leader == section1) or (leader == section3):
+            target_list.append(["1", "3", "C"])
+        else:
+            target_list.append(["1", "3"])
+
+    # Has section 1 not appeared in the target list part of a cluster        
+    if (s1 == True) and (section1 not in [ "A", "B", "C" ]):
+        # Add section 1 as a singleton target
+        if leader == section1:
+            target_list.append(["1", "C"])
+        else:
+            target_list.append(["1"])
+
+    # If section 2 to section 3 = range <= 1 there is a cluster
+    if (s2_to_s3 <=1 ) and ((section2 not in [ "A", "B", "C"]) or (section3 not in [ "A", "B", "C"])):
+        s2 = False
+        s3 = False
+        if (leader == section2) or (leader == section3):
+            target_list.append(["2", "3", "C"])
+        else:
+            target_list.append(["2", "3"])       
+
+    # Has section 2 not appeared in the target list part of a cluster        
+    if (s2 == True) and (section2 not in [ "A", "B", "C" ]):
+        print("Section 2 is a singleton")
+        # Add section 2 as a singleton target
+        print("Leader with section 2,", leader)
+        if leader == section2:
+            target_list.append(["2", "C"])
+        else:
+            target_list.append(["2"])
+
+    # Has section 3 not appeared in the target list part of a cluster        
+    if (s3 == True) and (section3 not in [ "A", "B", "C" ]):
+        # Add section 1 as a singleton target
+        if leader == section3:
+            target_list.append(["3", "C"])
+        else:
+            target_list.append(["3"])
+    
+    return target_list
+#
+#==================================================
+# Functions to Display Information back to the User
+#==================================================
+#
 # Print Game Board
+#
 def print_game_board(turn, s1, s2, s3, leader):
     print()
     commander = ""
@@ -444,15 +564,15 @@ def print_game_board(turn, s1, s2, s3, leader):
     print(rowB)
     print(rowC)
     print()
-
+#
 # Dice History 
+#
 def print_dice_history():
     print()
     print("============================")
     print("        DICE HISTORY        ")
     print("============================")
     print()
-#
     counter = 0
     for d in dice_history:
         print(d, " ", end = "")
@@ -462,8 +582,9 @@ def print_dice_history():
     print()
     print("============================")
     print()
-
+#
 # Information on the Blue forces staus
+#
 def blue_sections_display(leader_in_section, \
                           section1_status, section2_status, section3_status, \
                           section1_location, section2_location, section3_location):
@@ -489,7 +610,10 @@ def blue_sections_display(leader_in_section, \
             print ("Section 3 is", section3_status, "being located in hex:", section3_location)     
         print ()
 
-    
+#   
+#==============
+# Main Program
+#==============
 #
 print ()
 print ("This is Take That Hill")
@@ -519,11 +643,14 @@ Red_status = "Active"
 # Data Entry: Position of Blue Sections
 #
 # Data initialisation
+#
 section1_location = ""
 section2_location = ""
 section3_location = ""
 leader_in_section = 0
-# Get values from user
+#
+# Get values from user: Starting Locations
+#
 print ("What are the Blue Starting Positions")
 while section1_location not in ["A", "B", "C"]:
     section1_location = input("Where is Section 1?[A, B or C]").upper()
@@ -534,7 +661,9 @@ while section3_location not in ["A", "B", "C"]:
 while leader_in_section not in [1, 2, 3]:
     leader_in_section = int(input("Which section is the leader with? [1, 2, or 3]"))
 print ()
+#
 # Note: The Red Section is always in B5
+#
 Red_location = "B5"
 #
 # Main Game Loop
@@ -641,7 +770,7 @@ while True:
         while ans2.upper() not in section2_legal_moves:
             print(ans2, "is not a valid legal hex, please retry")
             ans2 = input ("Do you want to move Section 2 [Hex or N]?")
-            ans2 - ans2.upper()
+            ans2 = ans2.upper()
         if ans2 != "N":
             # Section used its action to move
             section2_location = ans2
@@ -805,16 +934,27 @@ while True:
         print ("The Reds cannot fire as their position is being overrun")
     else:
         Red_status = "Spent"
-        brit_targets = []
+        blue_targets = get_blue_targets(section1_location, section2_location, \
+                             section3_location, leader_in_section)
+        print("Valid tagets are:")
+        for bt in blue_targets:
+            print(bt)
+        shooting_at = []
         enemy = []
-        enemy = input ("Who did you shoot at [1, 2, 3, C]?")
-        for infantry in enemy:
-            if infantry != " ":
-                # print ("Add", infantry, "as a target")
-                brit_targets.append(infantry)
-        #print ("Blue Hit are:", brits_hit)
-        print ("You are claiming", len(brit_targets), "targets")
-        for target in brit_targets:
+        while enemy == []:
+            enemy = input ("Who did you shoot at [1, 2, 3, C]?")                
+            for infantry in enemy:
+                if infantry != " ":
+                    # print ("Add", infantry, "as a target")
+                    shooting_at.append(infantry)
+            if shooting_at in blue_targets:
+                print("That is a valid target combination", shooting_at)
+            else:
+                print("Sorry that is an invalid combination", shooting_at)
+                # Reset the enemy variable
+                enemy = []
+        print ("You are claiming", len(shooting_at), "targets")
+        for target in shooting_at:
             print ("Target =", target)
             d1 = dice_roll()
             if target != "C":
