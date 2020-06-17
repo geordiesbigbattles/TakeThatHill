@@ -406,24 +406,26 @@ def score_to_hit(target, firer):
 
 # What are the valid Blue targets for Red?
 def get_blue_targets(section1, section2, section3, leader_section):
+    #
     # Assign leader location to section
+    #
     if leader_section == 1:
         leader = section1
-        print("Assign Leader to Squad 1 in location", section1)
+        #print("Assign Leader to Squad 1 in location", section1)
     elif leader_section == 2:
         leader = section2
-        print("Assign Leader to Squad 2 in location", section2)
+        #print("Assign Leader to Squad 2 in location", section2)
     elif leader_section == 3:
         leader = section3
-        print("Assign Leader to Squad 3 in location", section3)
+        #print("Assign Leader to Squad 3 in location", section3)
     else:
-        print("Unknown section associated with leader", )
+        print("Error: Unknown section associated with leader", )
     target_list = []
     #
-    # Is there a Mega Cluster?
+    # Is there a single hex Mega Cluster?
     #
     if (section1 == section2) and (section2 == section3):
-        # Everyone in the same hex so return a Mega Cluster of targets
+        # Everyone in the same hex so return a Mega-Cluster of targets
         target_list = [ ["1", "2", "3", "C"] ]
         return target_list
     # Otherwise figure out the targets
@@ -431,7 +433,8 @@ def get_blue_targets(section1, section2, section3, leader_section):
     s1 = True
     s2 = True
     s3 = True
-    # There are three sections and aCommander to consider
+    #
+    # There are three sections and a Commander to consider
     # Is any section adjacent to another signify a cluster of targets?
     #
     # Calculate distances between sections
@@ -439,14 +442,26 @@ def get_blue_targets(section1, section2, section3, leader_section):
     #
     # Distance between sections 1 and 2
     s1_to_s2 = a_to_b(section1, section2)
-    print ("The range between section 1 and section 2 is,", s1_to_s2)
+    #print ("The range between section 1 and section 2 is,", s1_to_s2)
     # Distance between sections 1 and 3
     s1_to_s3 = a_to_b(section1, section3)
-    print ("The range between section 1 and section 3 is,", s1_to_s3)
+    #print ("The range between section 1 and section 3 is,", s1_to_s3)
 
     s2_to_s3 = a_to_b(section2, section3)
-    print ("The range between section 2 and section 3 is,", s2_to_s3)
-
+    #print ("The range between section 2 and section 3 is,", s2_to_s3)
+    #
+    # Is there a multi-hex Mega-Cluster of targets
+    # Situation 1 where section 1 and section 2 are stacked together
+    # and section 3 is adjacent
+    if (section1 == section2) and (s2_to_s3 == 1):
+        target_list = [ ["1", "2", "3", "C"] ]
+        return target_list
+    # Situation 2 where section 2 and section 3 are stacked together
+    # and section 1 is adjacent
+    if (section2 == section3) and (s1_to_s2 == 1):
+        target_list = [ ["1", "2", "3", "C"] ]
+        return target_list
+    
     # What about combinations with section 1?
     # If section 1 to section 2 = range <= 1 there is a cluster
     if (s1_to_s2 <= 1) and ((section1 not in [ "A", "B", "C" ]) or (section2 not in [ "A", "B", "C" ])):
@@ -939,10 +954,12 @@ while True:
         print("Valid tagets are:")
         for bt in blue_targets:
             print(bt)
+        print()
         shooting_at = []
         enemy = []
         while enemy == []:
-            enemy = input ("Who did you shoot at [1, 2, 3, C]?")                
+            # This step is necessary to avoid counting spaces in the input string
+            enemy = input ("Who did you shoot at [1, 2, 3, C - see your options above]?")                
             for infantry in enemy:
                 if infantry != " ":
                     # print ("Add", infantry, "as a target")
@@ -953,13 +970,14 @@ while True:
                 print("Sorry that is an invalid combination", shooting_at)
                 # Reset the enemy variable
                 enemy = []
-        print ("You are claiming", len(shooting_at), "targets")
+                shooting_at = []
+        #print ("You are claiming", len(shooting_at), "targets")
         for target in shooting_at:
-            print ("Target =", target)
+            #print ("Target =", target)
             d1 = dice_roll()
             if target != "C":
                 if target == "1":
-                    print("** section one location**", section1_location)
+                    #print("** section one location**", section1_location)
                     needs = score_to_hit(section1_location, "RED")
                     to_hit = needs[0]
                     at_range = needs[1]
