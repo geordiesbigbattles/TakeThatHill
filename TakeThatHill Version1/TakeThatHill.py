@@ -375,28 +375,39 @@ def score_to_hit(target, firer):
     to_hit = 0
     if (target == "A4") or (target=="B4") or (target=="C4"):
         the_range = 1
-        to_hit = 2
+        if firer == "BLUE":
+            to_hit = 2
+        else:
+            to_hit = 1
     elif (target == "A3") or (target=="B3") or (target=="C3"):
         the_range = 2
-        to_hit = 3
+        if firer == "BLUE":
+            to_hit = 3
+        else:
+            to_hit = 2
     elif (target == "A2") or (target=="B2") or (target=="C2"):
         the_range = 3
-        to_hit = 4
+        if firer == "BLUE":
+            to_hit = 4
+        else:
+            to_hit = 3
     elif (target == "A1") or (target=="B1") or (target=="C1"):
         the_range = 4
-        to_hit = 5
-    elif (target == "A") or (target=="B") or (target=="C"):
         if firer == "BLUE":
-            the_range = 5
-            to_hit = 6
-        elif firer == "RED":
-            print("Are you in the Trees?")
-            the_range = 5
-            to_hit = 7
+            to_hit = 5
         else:
-            print("Firer,", firer, "not known? [miss]")
-            the_range = 7
+            to_hit = 4
+    elif (target == "A") or (target=="B") or (target=="C"):
+        the_range = 5
+        if firer == "BLUE":
+            to_hit = 6
+        else:
+            print("Target", target, "is in the cover of the Trees?")
             to_hit = 7
+    elif not ((firer == "RED") or (firer == "BLUE")):
+        print("Firer,", firer, "not known? [miss]")
+        the_range = 7
+        to_hit = 7       
     else:
         print("Error: Target or Shooter hex", target, "not recognised! [miss]")
         the_range = 6
